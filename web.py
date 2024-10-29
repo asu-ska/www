@@ -1,4 +1,4 @@
-from fastapi import FastAPI, status
+from fastapi import FastAPI, status, Depends, params
 from fastapi.encoders import jsonable_encoder
 import asyncio
 import psutil
@@ -14,18 +14,12 @@ async def greet():
     await asyncio.sleep(1)
     return "Hello? Async?"
 
-
-# @app.get("/hi/{who}")
-# def greet(who):
-#     return f"Hello? {who}?"
-
-@app.get("/hi")
-async def greet():
-    await asyncio.sleep(1)
-    return "Hello? World?"
+@app.get("/hi/{who}")
+def greet(who):
+    return f"Hello? {who}?"
 
 @app.get("/happy", status_code=status.HTTP_201_CREATED)
-def happy(status_code=201):
+def happy():
     return "#"
 
 @app.get("/creature")
@@ -51,7 +45,6 @@ def test_encoder(data):
     assert out
     json_out = json.dumps(out)
     assert json_out
-
 
 
 if __name__ == "__main__":
